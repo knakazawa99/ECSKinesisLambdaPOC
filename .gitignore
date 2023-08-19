@@ -1,0 +1,6 @@
+# IDEA
+.idea
+
+# terraform
+terraform/.terraform.lock.hcl
+terraform/.terraform
