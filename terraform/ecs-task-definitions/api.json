@@ -1,0 +1,52 @@
+[
+  {
+    "name" : "ecs-kinesis-lambda-api",
+    "image" : "${ecs_kinesis_lambda_api_ecr}",
+    "cpu" : 0,
+    "essential" : true,
+    "portMappings" : [
+      {
+        "name": "ecs-kinesis-lambda-api",
+        "containerPort" : 8080,
+        "hostPort" : 8080,
+        "appProtocol": "http"
+      }
+    ],
+    "logConfiguration": {
+      "logDriver": "awsfirelens"
+    },
+    "environment": [
+    ]
+  },
+  {
+    "essential": true,
+    "name": "log_router",
+    "image": "${ecs_kinesis_lambda_fluentbit_ecr}",
+    "memoryReservation": 50,
+    "environment": [
+      {
+        "name": "LOG_GROUP_NAME",
+        "value": "${cw_log_group_name}"
+      },
+      {
+        "name": "KDS_STREAM",
+        "value": "${kds_stream}"
+      }
+    ],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "${cw_log_group_name}",
+        "awslogs-region": "ap-northeast-1",
+        "awslogs-stream-prefix": "firelens"
+      }
+    },
+    "firelensConfiguration": {
+      "type": "fluentbit",
+      "options": {
+        "config-file-type": "file",
+        "config-file-value": "/fluent-bit/etc/api.conf"
+      }
+    }
+  }
+]
