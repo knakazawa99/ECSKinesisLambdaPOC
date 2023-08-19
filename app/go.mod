@@ -3,8 +3,8 @@ module ecskinesislambda
 go 1.20
 
 require (
+	github.com/aws/aws-lambda-go v1.41.0
 	github.com/labstack/echo/v4 v4.11.1
-	golang.org/x/exp v0.0.0-20230817173708-d852ddb80c63
 )
 
 require (

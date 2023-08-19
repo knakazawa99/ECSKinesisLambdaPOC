@@ -65,6 +65,11 @@ func (s *Server) SetHandlers(e *echo.Echo) error {
 	health := v1.Group("/healthz")
 
 	health.GET("", func(c echo.Context) error {
+		return c.String(http.StatusOK, "health check ok")
+	})
+
+	logTest := v1.Group("/log")
+	logTest.GET("", func(c echo.Context) error {
 		log := Log{
 			Pat:     time.Now(),
 			ID:      time.Now().String(),
@@ -75,7 +80,7 @@ func (s *Server) SetHandlers(e *echo.Echo) error {
 		}
 		fmt.Printf("%s\n", j)
 
-		return c.String(http.StatusOK, "health check ok")
+		return c.String(http.StatusOK, "log test ok")
 	})
 
 	return nil

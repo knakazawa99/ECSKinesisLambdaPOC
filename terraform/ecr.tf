@@ -23,3 +23,16 @@ resource "aws_ecr_repository" "ecs_kinesis_lambda_poc_fluentbit_ecr" {
   }
   image_tag_mutability = "MUTABLE"
 }
+
+resource "aws_ecr_repository" "ecs_kinesis_lambda_poc_lambda_ecr" {
+  name = "${var.project_name}-lambda"
+
+  encryption_configuration {
+    encryption_type = "AES256"
+  }
+
+  image_scanning_configuration {
+    scan_on_push = "true"
+  }
+  image_tag_mutability = "MUTABLE"
+}
